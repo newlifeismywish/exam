@@ -1,0 +1,113 @@
+<html>
+
+<head>
+    <!--include jquery bootstrap sweetaler-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.all.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <form class="mt-5" role="form">
+
+                    <div class="form-group  form-group-default required">
+                        <label>姓名</label>
+                        <input type="text" class="form-control">
+                    </div>
+
+                    <div class="form-group  form-group-default required mt-2">
+                        <label>電話</label>
+                        <input type="text" class="form-control">
+                        <span>格式:0912345678</span>
+                    </div>
+                    <div class="form-group  form-group-default required mt-2">
+                        <label>地址</label>
+                        <input type="text" class="form-control">
+                    </div>
+
+                </form>
+                <div>
+                    <button id="submit">submit</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>姓名</th>
+                            <th>電話</th>
+                            <th>聯絡地址</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+<script>
+
+    var button = $('#submit');
+
+    button.click(function(){
+        var inputText=$('form input');
+        var telIsRight=validate(inputText.eq(1).val());
+        if (telIsRight) {
+            successMessage();
+        }else{
+            errorMessage();
+        }
+    });
+
+    function successMessage() {
+        Swal.fire(
+            "執行結果",         //title
+            "送出成功!",        //body
+            "success"          //icon
+        );
+        var inputText=$('form input');
+        addRow(inputText);
+        inputText.val("");      //清空資料
+    }
+
+    function errorMessage() {
+        Swal.fire(
+            "執行結果",         //title
+            "電話格式錯誤",        //body
+            "error"          //icon
+        );
+    }
+
+    $('document').ready(function () {
+
+    });
+
+    function validate(str){
+        var rules = new RegExp('09[0-9]{8}');
+        return rules.test(str)
+    }
+
+    function addRow(inputText){
+        tr=$('<tr></tr>');
+        for (i=0;i<3;i++){
+            tr.append($('<td></td>').text(inputText.eq(i).val()));
+        }
+        $('tbody').eq(0).prepend(tr);   //最新資料置頂  
+    }
+
+</script>
+
+</html>
