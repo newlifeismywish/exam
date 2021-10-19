@@ -28,3 +28,4 @@ data = urllib.parse.urlencode(values).encode('utf-8') # data should be bytes
 req = urllib.request.Request(url, data=data, headers=header)
 response = urllib.request.urlopen(req)
 page = response.read().decode("utf-8")
+print("test")
